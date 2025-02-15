@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Визитка</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #222;
+            color: white;
+        }
+        .card {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+        .photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+        .info {
+            display: flex;
+            flex-direction: column;
+        }
+        .timer {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="your-photo.jpg" alt="Фото" class="photo">
+        <div class="info">
+            <h2>Имя Фамилия</h2>
+            <p>Дата рождения: 1 января 1999</p>
+            <div class="timer" id="timer"></div>
+        </div>
+    </div>
+
+    <script>
+        function updateTimer() {
+            const birthDate = new Date("1999-01-01T00:00:00Z");
+            const now = new Date();
+            const diffMs = now - birthDate;
+
+            const seconds = Math.floor(diffMs / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            const years = Math.floor(days / 365.25);
+
+            document.getElementById("timer").innerHTML = `
+                Лет: ${years}<br>
+                Дней: ${days}<br>
+                Часов: ${hours}<br>
+                Минут: ${minutes}<br>
+                Секунд: ${seconds}
+            `;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
