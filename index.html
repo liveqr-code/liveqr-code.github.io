@@ -3,55 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Визитка</title>
+    <title>Киберпанк Визитка</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s ease-in-out;
+        }
+
         body {
-            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            margin: 0;
-            background-color: #222;
-            color: white;
+            background: #000;
+            color: #0ff;
+            text-align: center;
+            overflow: hidden;
         }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,255,255,0.2) 10%, transparent 80%);
+            z-index: -1;
+        }
+
         .card {
             display: flex;
             align-items: center;
             padding: 20px;
             border-radius: 10px;
-            background: #333;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
             text-align: left;
+            max-width: 500px;
+            border: 2px solid #0ff;
         }
+
         .photo {
             width: 100px;
             height: 100px;
             border-radius: 50%;
             object-fit: cover;
             margin-right: 20px;
+            border: 3px solid #0ff;
+            cursor: pointer;
         }
+
         .info {
             display: flex;
             flex-direction: column;
         }
+
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #0ff;
+            animation: typing 2s steps(20) forwards;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
         .timer {
-            margin-top: 20px;
-            font-size: 18px;
+            margin-top: 10px;
+            font-size: 16px;
             font-weight: bold;
         }
+
+        .socials {
+            display: flex;
+            margin-top: 15px;
+            gap: 15px;
+        }
+
+        .socials a {
+            text-decoration: none;
+            color: #0ff;
+            font-size: 24px;
+            transition: transform 0.2s;
+        }
+
+        .socials a:hover {
+            transform: scale(1.2);
+            color: #ff0;
+        }
+
+        .theme-switch {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #0ff;
+            border: none;
+            color: #000;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .theme-switch:hover {
+            background: #ff0;
+        }
+
+        /* Темная тема */
+        .dark {
+            background: #000;
+            color: #0ff;
+        }
+
+        .light {
+            background: #fff;
+            color: #000;
+        }
+
+        .light .card {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid #000;
+        }
+
+        .light .photo {
+            border-color: #000;
+        }
+
+        .light .theme-switch {
+            background: #000;
+            color: #fff;
+        }
+
+        .quote {
+            margin-top: 15px;
+            font-style: italic;
+            opacity: 0.8;
+            font-size: 14px;
+        }
     </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div class="background"></div>
+    
     <div class="card">
-        <img src="your-photo.jpg" alt="Фото" class="photo">
+        <img src="your-photo.jpg" alt="Фото" class="photo" id="photo">
         <div class="info">
-            <h2>Имя Фамилия</h2>
+            <div class="name">Имя Фамилия</div>
             <p>Дата рождения: 1 января 1999</p>
             <div class="timer" id="timer"></div>
+            <div class="socials">
+                <a href="https://t.me/your_username" target="_blank"><i class="fab fa-telegram"></i></a>
+                <a href="https://github.com/your_username" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://youtube.com/your_channel" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
         </div>
     </div>
+
+    <button class="theme-switch" onclick="switchTheme()">Сменить тему</button>
+    <div class="quote" id="quote"></div>
 
     <script>
         function updateTimer() {
@@ -74,8 +194,27 @@
             `;
         }
 
+        function switchTheme() {
+            document.body.classList.toggle('light');
+        }
+
+        const quotes = [
+            "Жизнь — это симуляция, и ты это знаешь.",
+            "Неоновый свет скрывает мрак улиц.",
+            "Ты — всего лишь код в чьей-то программе.",
+            "Добро пожаловать в киберпанк-реальность."
+        ];
+
+        document.getElementById("quote").innerText = quotes[Math.floor(Math.random() * quotes.length)];
+
         updateTimer();
         setInterval(updateTimer, 1000);
+
+        let clicks = 0;
+        document.getElementById("photo").addEventListener("click", () => {
+            clicks++;
+            if (clicks === 10) alert("Ты нашел секрет!");
+        });
     </script>
 </body>
 </html>
